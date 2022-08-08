@@ -46,4 +46,24 @@ public class MainController {
                 <h1>안녕하세요, POST 방식으로 오셨군요.</h1>
                 """.formatted(age);
     }
+
+    @GetMapping("/plus")
+    @ResponseBody
+    public int showPlus(int a, int b) {
+        return a + b;
+    }
+
+    @GetMapping("/minus")
+    @ResponseBody
+    public int showMinus(int a, int b) {
+        return a - b;
+    }
+
+    int value = -1;
+    @GetMapping ("/increase")
+    @ResponseBody
+    public int increasePage () {
+        value ++;
+        return value;
+    }
 }
