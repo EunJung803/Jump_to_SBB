@@ -97,4 +97,35 @@ public class MainController {
                 .mapToObj(i -> "%d * %d = %d".formatted(finalDan, i, finalDan * i))
                 .collect(Collectors.joining("<br>\n"));
     }
+
+    @GetMapping("/mbti")
+    @ResponseBody
+    public String getMbti(String name) {
+        switch(name){
+            case "홍길동" :
+                return "INFP";
+            case "홍길순" :
+                return "ENFP";
+            case "임꺽정" :
+                return "INFJ";
+            case "김은정" :
+                return "ISFJ";
+        }
+        return name;
+    }
+
+    // 새로운 방식의 switch문
+    @GetMapping("/mbti/{name}")
+    @ResponseBody
+    public String showMbti(@PathVariable String name) {
+        String rs =
+                switch (name) {
+                    case "홍길동" -> "INFP";
+                    case "홍길순" -> "ENFP";
+                    case "임꺽정" -> "INFJ";
+                    case "김은정" -> "ISFJ";
+                    default -> "모름";
+        };
+        return rs;
+    }
 }
