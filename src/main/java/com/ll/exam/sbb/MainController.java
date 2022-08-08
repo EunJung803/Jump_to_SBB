@@ -3,11 +3,15 @@ package com.ll.exam.sbb;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Controller
 public class MainController {
+    private int value = -1;
+    private String age = "";
 
     @RequestMapping("/sbb")
     // 아래 함수의 리턴값을 문자열화 해서 브라우저 응답의 바디에 담는다.
@@ -62,7 +66,6 @@ public class MainController {
         return a - b;
     }
 
-    int value = -1;
     @GetMapping ("/increase")
     @ResponseBody
     public int increasePage () {
@@ -127,5 +130,23 @@ public class MainController {
                     default -> "모름";
         };
         return rs;
+    }
+
+    @GetMapping("/saveSessionAge/{input_age}")
+    @ResponseBody
+    public String saveSession(@PathVariable String input_age, HttpServletRequest req) {
+
+        HttpSession session = req.getSession();
+        session.setAttribute(age, input_age);
+
+        return "세션 age=%s 등록".formatted(input_age);
+    }
+
+    @GetMapping("/getSessionAge")
+    @ResponseBody
+    public String getSession(HttpSession session) {
+        String value = (String) session.getAttribute(age);
+
+        return value;
     }
 }
