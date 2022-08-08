@@ -3,6 +3,9 @@ package com.ll.exam.sbb;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 @Controller
 public class MainController {
 
@@ -65,5 +68,33 @@ public class MainController {
     public int increasePage () {
         value ++;
         return value;
+    }
+
+    @GetMapping("/gugudan")
+    @ResponseBody
+    public String showGugudan(int dan, int limit) {
+        String gugu="";
+        for(int i=1; i<=limit; i++) {
+            gugu += "%d * %d = %d <br>".formatted(dan, i, dan*i);
+        }
+        return gugu;
+    }
+
+    // Stream 방식의 구구단
+    @GetMapping("/gugudanstream")
+    @ResponseBody
+    public String showGugudan(Integer dan, Integer limit) {
+        if (limit == null) {
+            limit = 9;
+        }
+
+        if (dan == null) {
+            dan = 9;
+        }
+
+        Integer finalDan = dan;
+        return IntStream.rangeClosed(1, limit)
+                .mapToObj(i -> "%d * %d = %d".formatted(finalDan, i, finalDan * i))
+                .collect(Collectors.joining("<br>\n"));
     }
 }
