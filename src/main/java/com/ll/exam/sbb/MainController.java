@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -279,6 +278,39 @@ public class MainController {
         return "%d번 게시물을 삭제하였습니다.".formatted(article.getId());
     }
      */
+
+
+//    이렇게 말고 객체로 받도록 구현해보기
+//    @GetMapping("addPerson")
+//    @ResponseBody
+//    String addPerson(int id, int age, String name) {
+//        Person p = new Person(id, age, name);
+//        return p;
+//    }
+
+    @GetMapping("/addPerson")
+    @ResponseBody
+    String addPerson(@ModelAttribute("p") Person p) {
+        return "id : %d, age : %d, name : %s, person is added".formatted(p.getId(), p.getAge(), p.getName());
+    }
+
+    /*
+    정답
+
+    @GetMapping("/addPerson")
+    @ResponseBody
+    Person addPerson1(Person p) {
+        return p;
+    }
+    //    -> 스프링이 그냥 이렇게 객체 return도 해준다.
+
+    @GetMapping("/addPerson/{id}")
+    @ResponseBody
+    Person addPerson2(Person p) {
+        return p;
+    }
+     */
+
 }
 
 @AllArgsConstructor
@@ -294,3 +326,12 @@ class Article {
         this(++lastId, title, body);
     }
 }
+
+
+@Getter
+@Setter
+class Person {
+    private int id;
+    private int age;
+    private String name;
+};
