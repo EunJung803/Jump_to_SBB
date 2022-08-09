@@ -1,10 +1,15 @@
 package com.ll.exam.sbb;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -148,5 +153,67 @@ public class MainController {
         String value = (String) session.getAttribute(age);
 
         return value;
+    }
+
+    /*
+    // 내가 짜고있던 코드
+    // (근데 article을 쌓아야하는데 이렇게 하면 쌓이지 않는다. article 객체 list로 저장해둬야함 !!)
+    int id = 0;
+    String articleTitle = "";
+    String articleBody = "";
+    @GetMapping("/addArticle")
+    @ResponseBody
+    public String addArticle(String title, String body) {
+        id++;
+        articleTitle = title;
+        articleBody = body;
+
+        return "%d번 글이 등록되었습니다.".formatted(id);
+    }
+
+    @GetMapping("/article/{id}")
+    @ResponseBody
+    public Article showArticle(@PathVariable int id) {
+        Article article = new Article();
+        article.writeArticle(id, articleTitle, articleBody);
+        return article;
+    }
+     */
+
+    private List<Article> articles = new ArrayList<>();
+    @GetMapping("/addArticle")
+    @ResponseBody
+    public String addArticle(String title, String body) {
+        Article article = new Article(title, body);
+
+        articles.add(article);
+
+        return "%d번 게시물이 생성되었습니다.".formatted(article.getId());
+    }
+
+    @GetMapping("/article/{id}")
+    @ResponseBody
+    public Article getArticle(@PathVariable int id) {
+        Article article = articles
+                .stream()
+                .filter(a -> a.getId() == id) // 1번
+                .findFirst()
+                .get();
+
+        return article;
+    }
+}
+
+@AllArgsConstructor
+@Getter
+@Setter
+class Article {
+    private static int lastId = 0;
+    private final int id;
+    private final String title;
+    private final String body;
+
+    public Article(String title, String body) {
+        this(++lastId, title, body);
     }
 }
