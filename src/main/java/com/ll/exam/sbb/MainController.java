@@ -240,6 +240,45 @@ public class MainController {
 
         return "%d번 게시물을 삭제하였습니다.".formatted(article.getId());
     }
+
+    /*
+    // @Pathvariable로 처리하는 방법 (수정, 삭제)
+
+    @GetMapping("/modifyArticle/{id}")
+    @ResponseBody
+    public String modifyArticle(@PathVariable int id, String title, String body) {
+        Article article = articles
+                .stream()
+                .filter(a -> a.getId() == id) // 1번
+                .findFirst()
+                .orElse(null);
+        if (article == null) {
+            return "%d번 게시물은 존재하지 않습니다.".formatted(id);
+        }
+        article.setTitle(title);
+        article.setBody(body);
+
+        return "%d번 게시물을 수정하였습니다.".formatted(article.getId());
+    }
+
+    @GetMapping("/deleteArticle/{id}")
+    @ResponseBody
+    public String deleteArticle(@PathVariable int id) {
+        Article article = articles
+                .stream()
+                .filter(a -> a.getId() == id) // 1번
+                .findFirst()
+                .orElse(null);
+
+        if (article == null) {
+            return "%d번 게시물은 존재하지 않습니다.".formatted(id);
+        }
+
+        articles.remove(article);
+
+        return "%d번 게시물을 삭제하였습니다.".formatted(article.getId());
+    }
+     */
 }
 
 @AllArgsConstructor
