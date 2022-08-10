@@ -5,8 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 class SbbApplicationTests {
@@ -30,6 +32,16 @@ class SbbApplicationTests {
 
 		assertThat(q1.getId()).isGreaterThan(0);
 		assertThat(q2.getId()).isGreaterThan(q1.getId());
+	}
+
+	@Test
+	void testJpa2() {
+		// SELECT * FROM question
+	List<Question> all = questionRepository.findAll();
+	assertEquals(6, all.size());	// 원래는 2 라고 해야 맞지만 여러번의 테스트코드 실행으로 지금 총 데이터가 6개가 들어가있어서 6으로 수정해주었다.
+
+	Question q = all.get(0);
+	assertEquals("sbb가 무엇인가요?", q.getSubject());
 	}
 
 }
