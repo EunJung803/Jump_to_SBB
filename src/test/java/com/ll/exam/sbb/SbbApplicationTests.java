@@ -37,11 +37,17 @@ class SbbApplicationTests {
 	@Test
 	void testJpa2() {
 		// SELECT * FROM question
-	List<Question> all = questionRepository.findAll();
-	assertEquals(6, all.size());	// 원래는 2 라고 해야 맞지만 여러번의 테스트코드 실행으로 지금 총 데이터가 6개가 들어가있어서 6으로 수정해주었다.
+		List<Question> all = questionRepository.findAll();
+		assertEquals(2, all.size());	// 2개로 컬럼 데이터 수정 완료
 
-	Question q = all.get(0);
-	assertEquals("sbb가 무엇인가요?", q.getSubject());
+		Question q = all.get(0);
+		assertEquals("sbb가 무엇인가요?", q.getSubject());
+	}
+
+	@Test
+	void testJpa3() {
+		Question q = questionRepository.findBySubject("sbb가 무엇인가요?");
+		assertEquals(1, q.getId());
 	}
 
 }
