@@ -92,6 +92,36 @@ public class QuestionRepositoryTests {
         assertThat(q.getSubject()).isEqualTo("수정된 제목");
     }
 
+    @Test
+    void findAll() {
+        List<Question> all = questionRepository.findAll();
+        assertThat(all.size()).isEqualTo(lastSampleDataId);
+
+        Question q = all.get(0);
+        assertThat(q.getSubject()).isEqualTo("sbb가 무엇인가요?");
+    }
+
+    @Test
+    void findBySubject() {
+        Question q = questionRepository.findBySubject("sbb가 무엇인가요?");
+        assertThat(q.getId()).isEqualTo(1);
+    }
+
+    @Test
+    void findBySubjectAndContent() {
+        Question q = questionRepository.findBySubjectAndContent(
+                "sbb가 무엇인가요?", "sbb에 대해서 알고 싶습니다.");
+        assertThat(q.getId()).isEqualTo(1);
+    }
+
+    @Test
+    void findBySubjectLike() {
+        List<Question> qList = questionRepository.findBySubjectLike("sbb%");
+        Question q = qList.get(0);
+
+        assertThat(q.getSubject()).isEqualTo("sbb가 무엇인가요?");
+    }
+
 //    @Test
 //    void testJpa0() {
 //        Question q1 = new Question();
