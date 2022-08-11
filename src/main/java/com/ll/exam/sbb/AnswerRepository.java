@@ -11,7 +11,7 @@ public interface AnswerRepository extends JpaRepository<Answer, Integer>, Reposi
     @Transactional
     @Modifying
     @Query(value = "truncate answer", nativeQuery = true)
-    void truncate();
+    void truncate();    // 이거 지우면 안됨, truncateTable 하면 자동으로 이게 실행됨
 
     @Transactional
     @Modifying
