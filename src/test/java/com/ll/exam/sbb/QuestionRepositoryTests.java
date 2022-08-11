@@ -81,6 +81,17 @@ public class QuestionRepositoryTests {
         assertEquals(1, questionRepository.count());
     }
 
+    @Test
+    void 수정() {
+        Question q = this.questionRepository.findById(1).get();
+        q.setSubject("수정된 제목");
+        questionRepository.save(q);
+
+        q = this.questionRepository.findById(1).get();
+
+        assertThat(q.getSubject()).isEqualTo("수정된 제목");
+    }
+
 //    @Test
 //    void testJpa0() {
 //        Question q1 = new Question();
