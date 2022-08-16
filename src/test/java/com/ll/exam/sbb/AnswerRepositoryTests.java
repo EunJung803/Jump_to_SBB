@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -78,4 +79,17 @@ public class AnswerRepositoryTests {
 
         assertThat(q.getId()).isEqualTo(1);
     }
+
+    @Test
+    void question으로부터_관련된_질문들_조회() {
+        // SELECT * FROM question WHERE id = 1
+        Question q = questionRepository.findById(1).get();  // 1번 글을 가져옴
+        // DB 연결이 끊김
+
+        // SELECT * FROM answer WHERE question_id = 1
+        List<Answer> answerList = q.getAnswerList();    // DB 연결이 끊겨서 가져오지 못함 ( 늦어버림 )
+
+        assertThat(answerList.size()).isEqualTo(2); // 2개의 답변이 달려있음 1번 글에는
+        assertThat(answerList.get(0).getContent()).isEqualTo("sbb는 질문답변 게시판 입니다."); // 그 2개의 답변 중 첫번째 답변이 이와 같음
+    }   // 이 테스트가 안되는 이유 : Lazily initialize -> 따라서 Question에 있는 OneToMany의 fetch타입을 Eager로 변경해줌
 }
