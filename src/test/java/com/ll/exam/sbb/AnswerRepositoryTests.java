@@ -4,6 +4,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -81,6 +83,8 @@ public class AnswerRepositoryTests {
     }
 
     @Test
+    @Transactional  // 한 묶음, 이 함수가 끝날 때까지 DB연결을 끊지 않음 (근데 이렇게 하면 이 테스트의 결과를 DB에 적용했다가 빼버림)
+    @Rollback(false)    // DB에 결과를 남겨둘 수 있도록
     void question으로부터_관련된_질문들_조회() {
         // SELECT * FROM question WHERE id = 1
         Question q = questionRepository.findById(1).get();  // 1번 글을 가져옴
