@@ -85,7 +85,7 @@ public class AnswerRepositoryTests {
         a2.setCreateDate(LocalDateTime.now());
         q.addAnswer(a2);
 
-        questionRepository.save(q);     // 한번에 쌓인 q 객체를 저장 !
+        questionRepository.save(q);     // question이 알아서 자기가 추가된 answer, 삭제된 answer 등등을 관리하여 저장
     }
 
     @Test
