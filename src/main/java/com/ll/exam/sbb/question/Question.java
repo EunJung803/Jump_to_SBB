@@ -26,7 +26,7 @@ public class Question {
 
     private LocalDateTime createDate;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "question", cascade = {CascadeType.ALL})    // question을 저장할 때 바뀐 내용이 있다면 DB에 반영 (PERSIST)
     private List<Answer> answerList = new ArrayList<>();    // null이면 안되니까
 
     public void addAnswer(Answer answer) {
