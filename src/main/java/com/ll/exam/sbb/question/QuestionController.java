@@ -3,8 +3,10 @@ package com.ll.exam.sbb.question;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RequestMapping("/question")
@@ -42,26 +44,16 @@ public class QuestionController {
     }
 
     @GetMapping("/create")
-    public String questionCreate() {
+    public String questionCreate(QuestionForm questionForm) {
         return "question_form";
     }
 
     @PostMapping("/create")
-    public String questionCreate(Model model, QuestionForm questionForm) {
-        boolean hasError = false;
+    public String questionCreate(Model model, @Valid QuestionForm questionForm, BindingResult bindingResult) {
+        // @Valid 애너테이션을 적용하면 QuestionForm의 @NotEmpty, @Size 등으로 설정한 검증 기능이 동작한다.
+        // 그리고 이어지는 BindingResult 매개변수는 @Valid 애너테이션으로 인해 검증이 수행된 결과를 의미하는 객체이다.
 
-        if (questionForm.getSubject() == null || questionForm.getSubject().trim().length() == 0) {
-            model.addAttribute("subjectErrorMsg", "제목 좀...");
-            hasError = true;
-        }
-
-        if (questionForm.getContent() == null || questionForm.getContent().trim().length() == 0) {
-            model.addAttribute("contentErrorMsg", "내용 좀...");
-            hasError = true;
-        }
-
-        if (hasError) {
-            model.addAttribute("questionForm", questionForm);
+        if (bindingResult.hasErrors()) {
             return "question_form";
         }
 
