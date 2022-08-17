@@ -23,7 +23,7 @@ public class QuestionController {
     // @Autowired // 필드 주입
     private final QuestionService questionService;    // final 붙은건 자동적으로 @Autowired 된다.
 
-    @RequestMapping("/list")
+    @GetMapping("/list")
     public String list(Model model) {
         List<Question> questionList = questionService.getList();
 
@@ -34,7 +34,7 @@ public class QuestionController {
         return "question_list";
     }
 
-    @RequestMapping("/detail/{id}")
+    @GetMapping("/detail/{id}")
     public String detail(Model model, @PathVariable int id) {
         Question question = questionService.getQuestion(id);
 
