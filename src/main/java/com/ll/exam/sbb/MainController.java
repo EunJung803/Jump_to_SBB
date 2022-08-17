@@ -43,7 +43,7 @@ public class MainController {
 
     @PostMapping("/page2")
     @ResponseBody
-    public String showPage2POST (@RequestParam(defaultValue = "0") int age) {
+    public String showPage2POST(@RequestParam(defaultValue = "0") int age) {
         return """
                 <h1>입력된 나이 : %d</h1>
                 <h1>안녕하세요, POST 방식으로 오셨군요.</h1>
@@ -52,7 +52,7 @@ public class MainController {
 
     @GetMapping("/page2")
     @ResponseBody
-    public String showPage2GET (@RequestParam(defaultValue = "0") int age) {
+    public String showPage2GET(@RequestParam(defaultValue = "0") int age) {
         return """
                 <h1>입력된 나이 : %d</h1>
                 <h1>안녕하세요, POST 방식으로 오셨군요.</h1>
@@ -71,19 +71,19 @@ public class MainController {
         return a - b;
     }
 
-    @GetMapping ("/increase")
+    @GetMapping("/increase")
     @ResponseBody
-    public int increasePage () {
-        value ++;
+    public int increasePage() {
+        value++;
         return value;
     }
 
     @GetMapping("/gugudan")
     @ResponseBody
     public String showGugudan(int dan, int limit) {
-        String gugu="";
-        for(int i=1; i<=limit; i++) {
-            gugu += "%d * %d = %d <br>".formatted(dan, i, dan*i);
+        String gugu = "";
+        for (int i = 1; i <= limit; i++) {
+            gugu += "%d * %d = %d <br>".formatted(dan, i, dan * i);
         }
         return gugu;
     }
@@ -109,14 +109,14 @@ public class MainController {
     @GetMapping("/mbti")
     @ResponseBody
     public String getMbti(String name) {
-        switch(name){
-            case "홍길동" :
+        switch (name) {
+            case "홍길동":
                 return "INFP";
-            case "홍길순" :
+            case "홍길순":
                 return "ENFP";
-            case "임꺽정" :
+            case "임꺽정":
                 return "INFJ";
-            case "김은정" :
+            case "김은정":
                 return "ISFJ";
         }
         return name;
@@ -133,7 +133,7 @@ public class MainController {
                     case "임꺽정" -> "INFJ";
                     case "김은정" -> "ISFJ";
                     default -> "모름";
-        };
+                };
         return rs;
     }
 
@@ -181,6 +181,7 @@ public class MainController {
      */
 
     private List<Article> articles = new ArrayList<>();
+
     @GetMapping("/addArticle")
     @ResponseBody
     public String addArticle(String title, String body) {
@@ -311,6 +312,10 @@ public class MainController {
     }
      */
 
+    @RequestMapping("/")
+    public String root() {
+        return "redirect:/question/list";
+    }
 }
 
 @AllArgsConstructor
