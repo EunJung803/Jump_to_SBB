@@ -2,6 +2,8 @@ package com.ll.exam.sbb.question;
 
 import com.ll.exam.sbb.base.RepositoryUtil;
 import com.ll.exam.sbb.question.Question;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -16,6 +18,8 @@ public interface QuestionRepository extends JpaRepository<Question, Integer>, Re
     Question findBySubjectAndContent(String s, String s1);
 
     List<Question> findBySubjectLike(String s);
+
+    Page<Question> findAll(Pageable pageable);
 
     @Transactional
     @Modifying
