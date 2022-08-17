@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
-@Controller("/question")
+@RequestMapping("/question")
+@Controller
 @RequiredArgsConstructor    // 생성자 주입
 // 컨트롤러는 Repository가 있는지 몰라야 한다.
 // 서비스는 웹브라우저라는것이 이 세상에 존재하는지 몰라야 한다.
