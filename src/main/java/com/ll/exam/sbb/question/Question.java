@@ -1,6 +1,7 @@
 package com.ll.exam.sbb.question;
 
 import com.ll.exam.sbb.answer.Answer;
+import com.ll.exam.sbb.user.SiteUser;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -28,6 +29,9 @@ public class Question {
 
     @OneToMany(mappedBy = "question", cascade = {CascadeType.ALL})    // question을 저장할 때 바뀐 내용이 있다면 DB에 반영 (PERSIST)
     private List<Answer> answerList = new ArrayList<>();    // null이면 안되니까
+
+    @ManyToOne
+    private SiteUser author;
 
     public void addAnswer(Answer answer) {
         answer.setQuestion(this);
