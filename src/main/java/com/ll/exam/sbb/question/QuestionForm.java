@@ -7,7 +7,7 @@ import lombok.Setter;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
-@AllArgsConstructor
+@Setter
 @Getter
 public class QuestionForm {
 
