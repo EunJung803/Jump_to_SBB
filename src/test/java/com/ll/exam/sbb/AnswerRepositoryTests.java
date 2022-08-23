@@ -4,6 +4,7 @@ import com.ll.exam.sbb.answer.Answer;
 import com.ll.exam.sbb.answer.AnswerRepository;
 import com.ll.exam.sbb.question.Question;
 import com.ll.exam.sbb.question.QuestionRepository;
+import com.ll.exam.sbb.user.SiteUser;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,6 +57,7 @@ public class AnswerRepositoryTests {
         a1.setContent("sbb는 질문답변 게시판 입니다.");
         a1.setQuestion(q);
         a1.setCreateDate(LocalDateTime.now());
+        a1.setAuthor(new SiteUser(1L));
         q.addAnswer(a1);
         answerRepository.save(a1);
 
@@ -65,6 +67,7 @@ public class AnswerRepositoryTests {
         a2.setContent("sbb에서는 주로 스프링부트관련 내용을 다룹니다.");
         a2.setQuestion(q);
         a2.setCreateDate(LocalDateTime.now());
+        a2.setAuthor(new SiteUser(2L));
         q.addAnswer(a1);
         answerRepository.save(a2);
 
@@ -82,11 +85,13 @@ public class AnswerRepositoryTests {
         Answer a1 = new Answer();
         a1.setContent("네 자동으로 생성됩니다.");
         a1.setCreateDate(LocalDateTime.now());
+        a1.setAuthor(new SiteUser(2L));
         q.addAnswer(a1);
 
         Answer a2 = new Answer();
         a2.setContent("네네~ 맞아요!");
         a2.setCreateDate(LocalDateTime.now());
+        a2.setAuthor(new SiteUser(2L));
         q.addAnswer(a2);
 
         questionRepository.save(q);     // question이 알아서 자기가 추가된 answer, 삭제된 answer 등등을 관리하여 저장
