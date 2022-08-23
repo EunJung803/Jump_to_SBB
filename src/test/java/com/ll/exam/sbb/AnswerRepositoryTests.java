@@ -6,6 +6,7 @@ import com.ll.exam.sbb.question.Question;
 import com.ll.exam.sbb.question.QuestionRepository;
 import com.ll.exam.sbb.user.SiteUser;
 import com.ll.exam.sbb.user.UserRepository;
+import com.ll.exam.sbb.user.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,9 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @SpringBootTest
 public class AnswerRepositoryTests {
+
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private QuestionRepository questionRepository;
@@ -46,7 +50,7 @@ public class AnswerRepositoryTests {
     }
 
     private void createSampleData() {
-        QuestionRepositoryTests.createSampleData(questionRepository);
+        QuestionRepositoryTests.createSampleData(userService, questionRepository);
 
         Question q = questionRepository.findById(1L).get();  // 1번 글을 가져와서
 
